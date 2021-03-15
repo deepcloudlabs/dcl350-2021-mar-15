@@ -1,7 +1,7 @@
 package com.example.hr.domain;
 
 
-//Entity Class -> Identity
+// Entity Class -> i) identity ii) mutable
 public class Employee {
 	private TcKimlikNo identity;
 	private FullName fullname;
