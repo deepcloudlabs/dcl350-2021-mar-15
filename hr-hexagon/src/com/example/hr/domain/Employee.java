@@ -45,6 +45,10 @@ public class Employee {
 		this.photo = builder.photo;
 	}
 
+	public BirthYear getBirthYear() {
+		return birthYear;
+	}
+
 	public TcKimlikNo getKimlikNo() {
 		return kimlikNo;
 	}
@@ -129,16 +133,11 @@ public class Employee {
 	}
 
 	// Flow API -> DSL
-	/* Example Usage:
-	new Employee.Builder("11111111110")
-	            .birthYear(1967)
-	            .salary(10_000, FiatCurrency.TRY)
-	            .iban("TR1")
-	            .fullname("Jack","Bauer")
-	            .jobType("FULL_TIME")
-	            .department("SALES")
-	            .build(); // Business Rule
-	*/
+	/*
+	 * Example Usage: new Employee.Builder("11111111110") .birthYear(1967)
+	 * .salary(10_000, FiatCurrency.TRY) .iban("TR1") .fullname("Jack","Bauer")
+	 * .jobType("FULL_TIME") .department("SALES") .build(); // Business Rule
+	 */
 	public static class Builder {
 		private TcKimlikNo kimlikNo;
 		private FullName fullname;
@@ -155,6 +154,14 @@ public class Employee {
 
 		public Builder fullname(String first, String last) {
 			this.fullname = FullName.of(first, last);
+			return this;
+		}
+
+		public Builder fullname(String fullname) {
+			var tokens = fullname.split(" ");
+			if (tokens.length != 2)
+				throw new IllegalArgumentException("does not match: firstname lastname");
+			this.fullname = FullName.of(tokens[0], tokens[1]);
 			return this;
 		}
 
@@ -177,16 +184,19 @@ public class Employee {
 			this.photo = Photo.of(data);
 			return this;
 		}
+
 		public Builder jobType(String value) {
 			this.jobType = JobType.valueOf(value);
 			return this;
 		}
+
 		public Builder department(String value) {
 			this.department = Department.valueOf(value);
 			return this;
 		}
+
 		public Employee build() {
-			// validation 
+			// validation
 			// business rule
 			return new Employee(this);
 		}
