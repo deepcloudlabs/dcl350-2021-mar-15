@@ -45,6 +45,10 @@ public class Employee {
 		this.photo = builder.photo;
 	}
 
+	public TcKimlikNo getKimlikNo() {
+		return kimlikNo;
+	}
+
 	public FullName getFullname() {
 		return fullname;
 	}
