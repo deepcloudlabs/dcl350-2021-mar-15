@@ -4,8 +4,11 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.WeakHashMap;
 
+import com.example.hr.domain.annotation.ValueObject;
+
 // Value Object -> Value Object i) no identity ii) immutable
 // Effective Java Ed.3
+@ValueObject
 public class TcKimlikNo {
 	private final String value;
 	private static final Map<String, TcKimlikNo> identityCache = new WeakHashMap<>();
