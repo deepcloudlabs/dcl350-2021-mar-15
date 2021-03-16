@@ -4,6 +4,8 @@ import java.util.Optional;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.example.hr.document.EmployeeDocument;
@@ -13,10 +15,14 @@ import com.example.hr.repository.EmployeeDocumentRepository;
 import com.example.hr.repository.EmployeeRepository;
 
 @Repository
+@ConditionalOnProperty(name = "database", havingValue = "mongo")
 public class MongoRepositoryEmployeeAdapter implements EmployeeRepository {
 	@Autowired 
 	private EmployeeDocumentRepository employeeDocumentRepository;
-
+	@Autowired
+	private MongoTemplate mongoTemplate;
+	
+	
 	@Autowired
 	private ModelMapper mapper;
 	

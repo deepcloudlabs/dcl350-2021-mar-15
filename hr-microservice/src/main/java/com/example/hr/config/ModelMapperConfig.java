@@ -10,6 +10,7 @@ import com.example.hr.domain.Employee;
 import com.example.hr.domain.FiatCurrency;
 import com.example.hr.domain.TcKimlikNo;
 import com.example.hr.dto.EmployeeKafkaEvent;
+import com.example.hr.entity.EmployeeEntity;
 import com.example.hr.events.EmployeeEvent;
 
 @Configuration
@@ -19,6 +20,8 @@ public class ModelMapperConfig {
 		var mapper = new ModelMapper();
 		mapper.addConverter(employeeDocument2Employee, EmployeeDocument.class, Employee.class);
 		mapper.addConverter(employee2EmployeeDocument, Employee.class, EmployeeDocument.class);
+		mapper.addConverter(employeeEntity2Employee, EmployeeEntity.class, Employee.class);
+		mapper.addConverter(employee2EmployeeEntity, Employee.class, EmployeeEntity.class);
 		mapper.addConverter(employeeEvent2EmployeeKafkaEvent, EmployeeEvent.class, EmployeeKafkaEvent.class);
 		return mapper;
 	}
@@ -58,5 +61,35 @@ public class ModelMapperConfig {
 		   empDoc.setJobType(employee.getJobType());
 		   empDoc.setPhoto(new String(employee.getPhoto().getData()));
 		   return empDoc;
+	   };
+	   // EmployeeEntity --> Employee
+	   private static final Converter<EmployeeEntity,Employee> employeeEntity2Employee
+	   = contex -> {
+		   var empDoc = contex.getSource();
+		   return new Employee.Builder(TcKimlikNo.valueOf(empDoc.getKimlikNo()))
+				   .fullname(empDoc.getFullname())
+				   .birthYear(empDoc.getBirthYear())
+				   .iban(empDoc.getIban())
+				   .salary(empDoc.getSalary(),FiatCurrency.TRY)
+				   .jobType(empDoc.getJobType().name())
+				   .department(empDoc.getDepartment().name())
+				   .photo(empDoc.getPhoto())
+				   .build();
+	   };
+	   // Employee --> EmployeeEntity
+	   private static final Converter<Employee,EmployeeEntity> employee2EmployeeEntity
+	   = contex -> {
+		   var employee = contex.getSource();
+		   var fullname = employee.getFullname();
+		   var emp = new EmployeeEntity();
+		   emp.setKimlikNo(employee.getKimlikNo().getValue());
+		   emp.setFullname(fullname.getFirstName()+" "+fullname.getLastName());
+		   emp.setSalary(employee.getSalary().getValue());
+		   emp.setBirthYear(employee.getBirthYear().getValue());
+		   emp.setIban(employee.getIban().getValue());
+		   emp.setDepartment(employee.getDepartment());
+		   emp.setJobType(employee.getJobType());
+		   emp.setPhoto(employee.getPhoto().getData());
+		   return emp;
 	   };
 }
