@@ -14,6 +14,7 @@ import com.example.hr.domain.TcKimlikNo;
 import com.example.hr.repository.EmployeeDocumentRepository;
 import com.example.hr.repository.EmployeeRepository;
 
+@SuppressWarnings("unused")
 @Repository
 @ConditionalOnProperty(name = "database", havingValue = "mongo")
 public class MongoRepositoryEmployeeAdapter implements EmployeeRepository {
