@@ -3,6 +3,9 @@ package com.example.hr.dto;
 public class EmployeeKafkaEvent {
 	private String identity;
 
+	public EmployeeKafkaEvent() {
+	}
+
 	public EmployeeKafkaEvent(String identity) {
 		this.identity = identity;
 	}

@@ -1,5 +1,7 @@
 package com.example.hr.service.business;
 
+import java.util.Objects;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,13 +25,18 @@ public class SimpleHrService implements HrService {
 	@Transactional
 	public HireEmployeeResponse hireEmployee(HireEmployeeRequest request) {
 		var kimlikNo = TcKimlikNo.valueOf(request.getIdentity());
+		var photo = request.getPhoto();
+		byte[] data = null;
+		if (Objects.nonNull(photo))
+			data = photo.getBytes();
+		
 		Employee employee = new Employee.Builder(kimlikNo)
 				                        .fullname(request.getFirstName(), request.getLastName()) 
 				                        .iban(request.getIban())
 				                        .salary(request.getSalary(), FiatCurrency.TRY)
 				                        .department(request.getDepartment().name())
 				                        .jobType(request.getType().name())
-				                        .photo(request.getPhoto().getBytes())
+				                        .photo(data)
 				                        .birthYear(request.getBirthYear())
 				                        .build();				                   
 		hrApplication.hireEmployee(employee);
