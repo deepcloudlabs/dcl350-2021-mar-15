@@ -1,4 +1,0 @@
-com\example\lottery\controller\LotteryController.class
-com\example\lottery\service\business\StandardLotteryService.class
-com\example\lottery\LotteryMicroserviceApplication.class
-com\example\lottery\service\LotteryService.class
