@@ -6,10 +6,10 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 
 @SpringBootApplication
 @EnableScheduling
-public class SpringBootRestApiWebsocketClientApplication {
+public class SpringBootRestApiReactiveClientApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(SpringBootRestApiWebsocketClientApplication.class, args);
+		SpringApplication.run(SpringBootRestApiReactiveClientApplication.class, args);
 	}
 
 }
