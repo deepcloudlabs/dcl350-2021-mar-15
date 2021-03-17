@@ -12,15 +12,16 @@ public class StudyReactiveProgrammingJavaSE9 {
 
 	public static void main(String[] args) throws InterruptedException {
 		System.err.println("Application is running...");
-		SubmissionPublisher<TradeEvent> publisher = new SubmissionPublisher<>();
-		Flow.Subscriber<TradeEvent> slowSubscriber = new AlgoTrader();
-		Flow.Subscriber<TradeEvent> fastSubscriber = new SignalProcessor();
-		publisher.subscribe(slowSubscriber);
-		publisher.subscribe(fastSubscriber);
-		var tradeEvents = List.of(new TradeEvent("ORCL", 100.0, 50), new TradeEvent("IBM", 70.0, 250),
-				new TradeEvent("MSFT", 110.0, 500), new TradeEvent("ORCL", 102.0, 250),
-				new TradeEvent("MSFT", 112.0, 2500));
-		tradeEvents.forEach(publisher::submit);
+		try (SubmissionPublisher<TradeEvent> publisher = new SubmissionPublisher<>()) {
+			Flow.Subscriber<TradeEvent> slowSubscriber = new AlgoTrader();
+			Flow.Subscriber<TradeEvent> fastSubscriber = new SignalProcessor();
+			publisher.subscribe(slowSubscriber);
+			publisher.subscribe(fastSubscriber);
+			var tradeEvents = List.of(new TradeEvent("ORCL", 100.0, 50), new TradeEvent("IBM", 70.0, 250),
+					new TradeEvent("MSFT", 110.0, 500), new TradeEvent("ORCL", 102.0, 250),
+					new TradeEvent("MSFT", 112.0, 2500));
+			tradeEvents.forEach(publisher::submit);
+		}
 		TimeUnit.SECONDS.sleep(30);
 	}
 
