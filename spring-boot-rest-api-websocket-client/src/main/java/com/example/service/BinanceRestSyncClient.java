@@ -8,6 +8,7 @@ import org.springframework.web.client.RestTemplate;
 
 import com.example.dto.Ticker;
 
+@SuppressWarnings("deprecation")
 @Service
 public class BinanceRestSyncClient {
 	@Value("${binance.rest.http.url}")
