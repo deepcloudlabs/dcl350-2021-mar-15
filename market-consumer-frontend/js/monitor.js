@@ -29,7 +29,7 @@ class DashboardViewModel {
     }
     connect =  () => {
         this.socket = new SockJS(
-            "http://localhost:9001/market/api/v1/changes");
+            "http://localhost:9800/changes");
         this.stompClient = Stomp.over(this.socket);
         this.stompClient.debug = () => {}
         this.stompClient.connect({}, (frame) => {
@@ -40,7 +40,7 @@ class DashboardViewModel {
                 (msg) =>{
                     if (!this.monitoring()) return;
                    let trade = JSON.parse(msg.body);
-                   this.data.datasets[0].data.push(trade.price);
+                   this.data.datasets[0].data.push(trade.p);
                     let now = new Date().toTimeString();
                     now= now.replace(/.*(\d{2}:\d{2}:\d{2}).*/,'$1');
                     this.data.labels.push(now);
