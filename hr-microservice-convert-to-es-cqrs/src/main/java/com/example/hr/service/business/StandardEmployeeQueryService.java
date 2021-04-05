@@ -8,7 +8,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import com.example.hr.entity.Employee;
-import com.example.hr.repository.EmployeeRepository;
 import com.example.hr.repository.EmployeeSnapshotRepository;
 import com.example.hr.service.EmployeeQueryService;
 import com.example.hr.service.exception.EmployeeNotFoundException;

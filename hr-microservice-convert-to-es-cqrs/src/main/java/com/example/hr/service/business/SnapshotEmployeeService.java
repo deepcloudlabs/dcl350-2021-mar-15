@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 import com.example.hr.entity.Employee;
 import com.example.hr.eventsource.EmployeeCreatedEvent;
 import com.example.hr.eventsource.EmployeeDeletedEvent;
-import com.example.hr.eventsource.EmployeeEvent;
 import com.example.hr.eventsource.EmployeeSalaryUpdatedEvent;
 import com.example.hr.repository.EmployeeSnapshotRepository;
 
